@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- PhotoS launcher foreground: photo with a sync badge. Same artwork as desktop/build/icon.svg. -->
+<vector xmlns:android="http://schemas.android.com/apk/res/android" android:width="108dp" android:height="108dp" android:viewportWidth="108" android:viewportHeight="108">
+    <group android:scaleX="0.066" android:scaleY="0.066" android:translateX="20.21" android:translateY="19.94">
+        <group android:translateX="-34" android:translateY="-40">
+            <path android:fillColor="#F5F5F5" android:pathData="M240,220 H680 A70,70 0 0,1 750,290 V620 A70,70 0 0,1 680,690 H240 A70,70 0 0,1 170,620 V290 A70,70 0 0,1 240,220 Z"/>
+            <group>
+                <clip-path android:pathData="M240,220 H680 A70,70 0 0,1 750,290 V620 A70,70 0 0,1 680,690 H240 A70,70 0 0,1 170,620 V290 A70,70 0 0,1 240,220 Z"/>
+                <path android:fillColor="#FFC857" android:pathData="M538,350 A52,52 0 1,0 642,350 A52,52 0 1,0 538,350 Z"/>
+                <path android:fillColor="#A1A1A8" android:pathData="M380,700 L560,495 L790,700 Z"/>
+                <path android:fillColor="#5C5C63" android:pathData="M140,700 L370,450 L600,700 Z"/>
+            </group>
+            <path android:fillColor="#0B0B0B" android:pathData="M547,705 A188,188 0 1,0 923,705 A188,188 0 1,0 547,705 Z"/>
+            <path android:fillColor="#6FD08C" android:pathData="M575,705 A160,160 0 1,0 895,705 A160,160 0 1,0 575,705 Z"/>
+            <path android:strokeColor="#0B0B0B" android:strokeWidth="36" android:strokeLineCap="round" android:pathData="M654.3,667.4 A89,89 0 0,1 805.1,650.2"/>
+            <path android:strokeColor="#0B0B0B" android:strokeWidth="36" android:strokeLineCap="round" android:pathData="M815.7,742.6 A89,89 0 0,1 664.9,759.8"/>
+            <path android:fillColor="#0B0B0B" android:pathData="M835.9,689.6 L835.1,626.8 L775.2,673.6 Z"/>
+            <path android:fillColor="#0B0B0B" android:pathData="M634.1,720.4 L634.9,783.2 L694.8,736.4 Z"/>
+        </group>
+    </group>
+</vector>

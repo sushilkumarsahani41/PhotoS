@@ -1,0 +1,18 @@
+*.iml
+.gradle/
+.idea/
+local.properties
+**/build/
+*.jks
+*.keystore
+.DS_Store
+
+# Release credentials stay outside the repository
+keystore.properties
+signing-credentials.json
+.env
+!desktop/build/
+.kotlin/
+.vscode/
+node_modules/
+desktop/dist/

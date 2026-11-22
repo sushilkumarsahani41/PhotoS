@@ -1,0 +1,86 @@
+{
+  "name": "photos-desktop",
+  "productName": "PhotoS",
+  "version": "1.5.0",
+  "description": "Browse a PhotoS backup drive and add photos from your PC.",
+  "main": "src/main.js",
+  "author": "PhotoS",
+  "license": "UNLICENSED",
+  "private": true,
+  "scripts": {
+    "start": "electron .",
+    "test": "node --test test/*.test.js",
+    "dist:win": "electron-builder --win nsis portable --x64",
+    "dist:mac": "electron-builder --mac dmg zip --arm64 --x64"
+  },
+  "build": {
+    "appId": "app.photos.desktop",
+    "files": [
+      "src/**/*",
+      "package.json"
+    ],
+    "directories": {
+      "output": "dist"
+    },
+    "win": {
+      "target": [
+        "nsis",
+        "portable"
+      ],
+      "signAndEditExecutable": false,
+      "icon": "build/icon.ico"
+    },
+    "nsis": {
+      "oneClick": false,
+      "allowToChangeInstallationDirectory": true,
+      "artifactName": "PhotoS-Setup-${version}.exe",
+      "perMachine": true,
+      "createDesktopShortcut": true,
+      "createStartMenuShortcut": true,
+      "menuCategory": "PhotoS",
+      "shortcutName": "PhotoS",
+      "uninstallDisplayName": "PhotoS",
+      "deleteAppDataOnUninstall": true,
+      "runAfterFinish": true,
+      "include": "build/installer.nsh",
+      "allowElevation": true,
+      "installerIcon": "build/icon.ico",
+      "uninstallerIcon": "build/icon.ico",
+      "installerHeaderIcon": "build/icon.ico"
+    },
+    "portable": {
+      "artifactName": "PhotoS-${version}-portable.exe"
+    },
+    "afterPack": "build/after-pack.js",
+    "mac": {
+      "icon": "build/icon.png",
+      "category": "public.app-category.photography",
+      "target": [
+        "dmg",
+        "zip"
+      ],
+      "identity": null,
+      "hardenedRuntime": false,
+      "gatekeeperAssess": false,
+      "artifactName": "PhotoS-${version}-${arch}.${ext}",
+      "extendInfo": {
+        "NSDocumentsFolderUsageDescription": "PhotoS reads the photos you choose to add to your backup drive.",
+        "NSRemovableVolumesUsageDescription": "PhotoS shows and adds photos on your backup drive.",
+        "NSDesktopFolderUsageDescription": "PhotoS reads the photos you choose to add to your backup drive.",
+        "NSDownloadsFolderUsageDescription": "PhotoS reads the photos you choose to add to your backup drive."
+      }
+    },
+    "dmg": {
+      "title": "PhotoS ${version}",
+      "artifactName": "PhotoS-${version}-${arch}.dmg"
+    }
+  },
+  "dependencies": {
+    "exifr": "^7.1.3"
+  },
+  "devDependencies": {
+    "electron": "^33.4.11",
+    "electron-builder": "^25.1.8",
+    "resedit": "^3.1.0"
+  }
+}

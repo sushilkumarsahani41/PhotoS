@@ -1,0 +1,30 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1024 1024">
+  <defs>
+    <linearGradient id="bg" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0" stop-color="#2B2B2F"/>
+      <stop offset="1" stop-color="#070707"/>
+    </linearGradient>
+    <clipPath id="card"><rect x="170" y="220" width="580" height="470" rx="70"/></clipPath>
+  </defs>
+  <rect width="1024" height="1024" rx="228" fill="url(#bg)"/>
+  <g transform="translate(-34 -40)">
+    <!-- photo -->
+    <rect x="170" y="220" width="580" height="470" rx="70" fill="#F5F5F5"/>
+    <g clip-path="url(#card)">
+      <circle cx="590" cy="350" r="52" fill="#FFC857"/>
+      <path d="M380 700 L560 495 L790 700 Z" fill="#A1A1A8"/>
+      <path d="M140 700 L370 450 L600 700 Z" fill="#5C5C63"/>
+    </g>
+    <!-- sync badge -->
+    <circle cx="735" cy="705" r="188" fill="#0B0B0B"/>
+    <circle cx="735" cy="705" r="160" fill="#6FD08C"/>
+    <g fill="none" stroke="#0B0B0B" stroke-width="36" stroke-linecap="round">
+      <path d="M654.3 667.4 A89 89 0 0 1 805.1 650.2"/>
+      <path d="M815.7 742.6 A89 89 0 0 1 664.9 759.8"/>
+    </g>
+    <g fill="#0B0B0B">
+      <path d="M835.9 689.6 L835.1 626.8 L775.2 673.6 Z"/>
+      <path d="M634.1 720.4 L634.9 783.2 L694.8 736.4 Z"/>
+    </g>
+  </g>
+</svg>

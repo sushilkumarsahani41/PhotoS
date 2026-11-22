@@ -1,0 +1,106 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="Content-Security-Policy" content="default-src 'self'; img-src 'self' psthumb: psmedia: data: blob:; media-src psmedia:; connect-src psthumb:; style-src 'self'; script-src 'self'">
+  <title>PhotoS</title>
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+  <aside class="side">
+    <div class="brand">
+      <svg viewBox="0 0 24 24" aria-hidden="true"><rect x="3" y="5" width="18" height="14" rx="3"/><circle cx="12" cy="12" r="3.2"/><path d="M12 8.8v-1.3M15.2 12h1.3"/></svg>
+      <span>Photo<b>S</b></span>
+    </div>
+    <button class="drive" id="drive" title="Choose a different backup drive">
+      <svg viewBox="0 0 24 24" aria-hidden="true"><rect x="4" y="6" width="16" height="12" rx="2.5"/><path d="M8 14h.01M11 14h5"/></svg>
+      <span class="drive-text"><b id="driveName">No drive</b><small id="drivePath">Choose your backup drive</small></span>
+    </button>
+    <div class="fast" id="fast" hidden>
+      <div class="fast-row"><span id="fastText"></span></div>
+      <div class="bar" id="fastBar" hidden><i></i></div>
+      <label class="fast-auto"><input type="checkbox" id="fastAuto" checked> Keep updated automatically</label>
+      <div class="fast-row">
+        <button class="ghost small" id="fastBuild">Build fast index</button>
+        <button class="ghost small" id="fastUpdate" hidden>Update now</button>
+        <button class="ghost small" id="fastRebuild" hidden>Rebuild</button>
+        <button class="ghost small" id="fastPause" hidden>Pause</button>
+        <button class="ghost small" id="fastStop" hidden>Stop</button>
+      </div>
+    </div>
+    <nav id="nav">
+      <button class="nav active" data-view="all"><span>All photos</span><em id="countAll"></em></button>
+      <button class="nav" data-view="videos"><span>Videos</span><em id="countVideos"></em></button>
+      <button class="nav" data-view="duplicates"><span>Duplicates</span><em id="countDupes"></em></button>
+      <div class="nav-title">Albums</div>
+      <div id="albums"></div>
+    </nav>
+    <button class="primary add" id="add" disabled>
+      <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 5v14M5 12h14"/></svg>Add photos
+    </button>
+  </aside>
+
+  <main>
+    <header class="top">
+      <button class="icon" id="back" title="Back" aria-label="Back" hidden><svg viewBox="0 0 24 24"><path d="M15 5l-7 7 7 7"/></svg></button>
+      <div class="title"><h1 id="title">All photos</h1><span id="subtitle"></span></div>
+      <input id="search" type="search" placeholder="Search by name, album or date" aria-label="Search by name, album or date" title="Name, album, or a date: 2023 · May 2023 · 12/05/2023 · yesterday">
+      <label class="zoom" title="Thumbnail size">
+        <svg viewBox="0 0 24 24" aria-hidden="true"><rect x="4" y="4" width="7" height="7" rx="1.5"/><rect x="13" y="4" width="7" height="7" rx="1.5"/><rect x="4" y="13" width="7" height="7" rx="1.5"/><rect x="13" y="13" width="7" height="7" rx="1.5"/></svg>
+        <input id="zoom" type="range" min="110" max="320" step="10" value="180" aria-label="Thumbnail size">
+      </label>
+      <button class="icon" id="refresh" title="Rescan drive" aria-label="Rescan drive"><svg viewBox="0 0 24 24"><path d="M19 8a8 8 0 1 0 1 6M19 3v5h-5"/></svg></button>
+    </header>
+    <div class="topbar-progress" id="topProgress" hidden><i></i></div>
+    <section id="content" tabindex="-1"></section>
+  </main>
+
+  <div class="drop" id="drop" hidden><div>Drop photos or folders to add them to the backup drive</div></div>
+
+  <div class="viewer" id="viewer" hidden>
+    <div class="vbar">
+      <button class="icon light" id="vClose" title="Close (Esc)" aria-label="Close"><svg viewBox="0 0 24 24"><path d="M15 5l-7 7 7 7"/></svg></button>
+      <div class="vtitle"><b id="vName"></b><small id="vMeta"></small></div>
+      <button class="icon light" id="vInfo" title="Info (I)" aria-label="Info"><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="8.5"/><path d="M12 11v5M12 8h.01"/></svg></button>
+      <button class="icon light" id="vOpen" title="Open in default app" aria-label="Open in default app"><svg viewBox="0 0 24 24"><path d="M14 5h5v5M19 5l-8 8M17 14v4a1 1 0 0 1-1 1H6a1 1 0 0 1-1-1V8a1 1 0 0 1 1-1h4"/></svg></button>
+      <button class="icon light" id="vReveal" title="Show in folder" aria-label="Show in folder"><svg viewBox="0 0 24 24"><path d="M4 7a2 2 0 0 1 2-2h4l2 2h6a2 2 0 0 1 2 2v8a2 2 0 0 1-2 2H6a2 2 0 0 1-2-2z"/></svg></button>
+    </div>
+    <div class="stage" id="stage"></div>
+    <div class="spinner viewer-spinner" id="vSpinner" hidden></div>
+    <button class="nav-arrow prev" id="vPrev" aria-label="Previous"><svg viewBox="0 0 24 24"><path d="M15 5l-7 7 7 7"/></svg></button>
+    <button class="nav-arrow next" id="vNext" aria-label="Next"><svg viewBox="0 0 24 24"><path d="M9 5l7 7-7 7"/></svg></button>
+    <aside class="info" id="infoPanel" hidden></aside>
+  </div>
+
+  <dialog id="busyDialog" class="busy"><div class="spinner"></div><p id="busyText">Finding photos…</p></dialog>
+
+  <dialog id="importDialog">
+    <form method="dialog" id="importForm">
+      <h2 id="iTitle">Add photos to the backup drive</h2>
+      <p id="iSummary" class="muted"></p>
+      <div id="iChoose">
+        <label class="radio"><input type="radio" name="mode" value="keep" checked><span><b>Keep folder names as albums</b><small id="iAlbums"></small></span></label>
+        <label class="radio"><input type="radio" name="mode" value="one"><span><b>Put everything in one album</b>
+          <input id="iAlbum" list="albumList" placeholder="Album name, e.g. Camera" autocomplete="off"><datalist id="albumList"></datalist></span></label>
+        <label class="parallel">Copy <select id="iParallel" aria-label="Files copied at the same time"></select> files at the same time
+          <small>More is faster on SSDs and fast USB 3 drives; use 1–2 for slow USB sticks.</small></label>
+        <p class="muted small">Photos already on the drive are skipped by content, even if renamed. Each copy is checked byte for byte before it is kept. Your files on this computer are not changed.</p>
+      </div>
+      <div id="iProgress" hidden>
+        <div class="bar"><i id="iBar"></i></div>
+        <p id="iNow" class="muted small"></p>
+        <p id="iCounts"></p>
+        <ul id="iFailed" class="failed"></ul>
+      </div>
+      <div class="actions">
+        <button type="button" class="ghost" id="iCancel">Cancel</button>
+        <button type="button" class="ghost" id="iPause" hidden>Pause</button>
+        <button type="button" class="primary" id="iStart">Add to drive</button>
+      </div>
+    </form>
+  </dialog>
+
+  <script src="datequery.js"></script>
+  <script src="renderer.js"></script>
+</body>
+</html>

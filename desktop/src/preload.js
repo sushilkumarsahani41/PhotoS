@@ -1,0 +1,33 @@
+'use strict';
+const { contextBridge, ipcRenderer, webUtils } = require('electron');
+
+contextBridge.exposeInMainWorld('photos', {
+  state: () => ipcRenderer.invoke('state'),
+  chooseDrive: () => ipcRenderer.invoke('choose-drive'),
+  scan: () => ipcRenderer.invoke('scan'),
+  storeThumb: (id, size, dataUrl) => ipcRenderer.invoke('store-thumb', id, size, dataUrl),
+  reveal: (id) => ipcRenderer.invoke('reveal', id),
+  openExternal: (id) => ipcRenderer.invoke('open-external', id),
+  pickSources: (mode) => ipcRenderer.invoke('pick-sources', mode),
+  prepareSources: (paths) => ipcRenderer.invoke('prepare-sources', paths),
+  dropPaths: (files) => Array.from(files, (f) => webUtils.getPathForFile(f)),
+  import: (token, album) => ipcRenderer.invoke('import', { token, album }),
+  cancelImport: () => ipcRenderer.invoke('cancel-import'),
+  buildIndex: (opts) => ipcRenderer.invoke('build-index', opts ?? {}),
+  setAutoIndex: (on) => ipcRenderer.invoke('set-auto-index', on),
+  findDuplicates: () => ipcRenderer.invoke('find-duplicates'),
+  removeDuplicates: (choices) => ipcRenderer.invoke('remove-duplicates', choices),
+  pauseDuplicates: () => ipcRenderer.invoke('pause-dupes'),
+  resumeDuplicates: () => ipcRenderer.invoke('resume-dupes'),
+  cancelDuplicates: () => ipcRenderer.invoke('cancel-dupes'),
+  onDuplicateProgress: (fn) => ipcRenderer.on('dupe-progress', (_e, p) => fn(p)),
+  pauseIndex: () => ipcRenderer.invoke('pause-index'),
+  resumeIndex: () => ipcRenderer.invoke('resume-index'),
+  cancelIndex: () => ipcRenderer.invoke('cancel-index'),
+  onIndexProgress: (fn) => ipcRenderer.on('index-progress', (_e, p) => fn(p)),
+  pauseImport: () => ipcRenderer.invoke('pause-import'),
+  resumeImport: () => ipcRenderer.invoke('resume-import'),
+  setParallel: (n) => ipcRenderer.invoke('set-parallel', n),
+  onDates: (fn) => ipcRenderer.on('dates', (_e, p) => fn(p)),
+  onImportProgress: (fn) => ipcRenderer.on('import-progress', (_e, p) => fn(p)),
+});
