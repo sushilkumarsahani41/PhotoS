@@ -8,7 +8,7 @@
   "license": "UNLICENSED",
   "private": true,
   "scripts": {
-    "start": "electron .",
+    "start": "node init && electron .",
     "test": "node --test test/*.test.js",
     "dist:win": "electron-builder --win nsis portable --x64",
     "dist:mac": "electron-builder --mac dmg zip --arm64 --x64"

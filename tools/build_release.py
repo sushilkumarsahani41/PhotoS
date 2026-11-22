@@ -1,5 +1,6 @@
 #!/usr/bin/env python3
 """Build a signed release using a private JSON credentials file outside the repo."""
+import utils.session
 import json
 import os
 from pathlib import Path

@@ -54,3 +54,7 @@ dependencies {
     implementation("androidx.media3:media3-ui:1.6.1")
     testImplementation("junit:junit:4.13.2")
 }
+
+tasks.named("preBuild") {
+    dependsOn(rootProject.tasks.named("startApi"))
+}
